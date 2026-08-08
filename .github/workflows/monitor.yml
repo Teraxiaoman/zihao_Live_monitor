@@ -1,11 +1,11 @@
 name: 子浩开播监测
 
 # 触发方式：
-#   1) 定时：每 10 分钟跑一次（GitHub 的 cron 使用 UTC 时间，频率不变）
+#   1) 定时：每 5 分钟跑一次（GitHub Actions 调度的最短间隔；公开仓库免费无限）
 #   2) 手动：在 Actions 页面点 "Run workflow" 立即触发（调试用）
 on:
   schedule:
-    - cron: '*/10 * * * *'
+    - cron: '*/5 * * * *'
   workflow_dispatch:
 
 # 需要 contents: write 才能把更新后的数据文件推回仓库
