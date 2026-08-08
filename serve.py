@@ -2,7 +2,7 @@
 本地可写服务器：既能托管看板页面，又能接收"编辑校正"请求写进数据库。
 
 为什么需要它：
-    看板页面(dashboard/index.html)是纯静态的，只能读数据。
+    看板页面(docs/index.html)是纯静态的，只能读数据。
     但"历史记录校正"要修改数据库里的开播/下播时间，必须有后端写接口。
     这个服务器用 Python 标准库实现，不用 pip 安装任何东西。
 
@@ -13,10 +13,10 @@
 接口：
     GET  /api/health                -> {"ok": true}        前端用来判断"能否编辑"
     POST /api/update_session        -> 改一条记录的起止时间，并重算时长、刷新看板
-    其余路径                        -> 当作静态文件，托管 dashboard/ 目录
+    其余路径                        -> 当作静态文件，托管 docs/ 目录
 
 说明：编辑必须在"本机这个服务器"下进行（数据文件在你电脑上）。
-      改完之后，dashboard/data.json 会自动重生成，发布到云上就是校正后的数据。
+      改完之后，docs/data.json 会自动重生成，发布到云上就是校正后的数据。
 """
 from __future__ import annotations
 
@@ -29,7 +29,7 @@ from http.server import SimpleHTTPRequestHandler, ThreadingHTTPServer
 
 ROOT = Path(__file__).parent
 sys.path.insert(0, str(ROOT / "src"))
-DASHBOARD_DIR = ROOT / "dashboard"
+DASHBOARD_DIR = ROOT / "docs"
 
 from database import init_db, _connect          # noqa: E402
 import gen_data                                 # noqa: E402

@@ -1,5 +1,5 @@
 """
-生成看板数据：把"各主播当前状态 + 本月时长统计 + 历史场次"打包成 dashboard/data.json。
+生成看板数据：把"各主播当前状态 + 本月时长统计 + 历史场次"打包成 docs/data.json。
 
 设计说明（这一步的核心知识点）：
     网页（前端）不能直接 import Python 模块，它只能通过 HTTP 拿到一份 JSON。
@@ -29,7 +29,7 @@ from analytics import build_report, format_hours
 from douyin import create_session, fetch_live_status
 
 CONFIG_PATH = ROOT / "config.json"
-OUT_PATH = ROOT / "dashboard" / "data.json"
+OUT_PATH = ROOT / "docs" / "data.json"
 
 
 def load_config() -> dict:

@@ -22,7 +22,7 @@ zhibo/
 ├── config.json             你的真实配置（含密钥，**不会**上传 GitHub，已被 .gitignore 忽略）
 ├── requirements.txt        依赖清单
 ├── monitor.py              监测主程序（单次 / 循环 / 测试推送 / 报告）
-├── gen_data.py             生成看板数据 dashboard/data.json + data.js
+├── gen_data.py             生成看板数据 docs/data.json + data.js
 ├── serve.py                本地可写服务器（看板 + 历史记录校正接口），端口 8777
 ├── src/
 │   ├── douyin.py           核心：抖音开播状态查询（需先拿 ttwid cookie）
@@ -33,7 +33,7 @@ zhibo/
 ├── scripts/
 │   ├── backfill.py         历史数据回填（手动校正用）
 │   └── explore_api.py      接口探索工具（学习用）
-├── dashboard/
+├── docs/
 │   ├── index.html          手机看板页面
 │   ├── data.json           看板数据（由 gen_data.py 生成，会被 GitHub Pages 托管）
 │   └── data.js             离线兜底数据
@@ -125,15 +125,15 @@ git push -u origin main
 
 1. 仓库 → `Settings → Pages`。
 2. Source 选 `Deploy from a branch`。
-3. Branch 选 `main`，文件夹选 `/dashboard`。
+3. Branch 选 `main`，文件夹选 `/docs`。
 4. 点 Save。
 5. 几分钟后访问 `https://<你的用户名>.github.io/<仓库名>/` 即可看到看板。
 
 ### 触发与验证
 
-- Actions 默认每 10 分钟自动跑。首次可手动触发：仓库 `Actions` 标签 →
+- Actions 默认每 5 分钟自动跑。首次可手动触发：仓库 `Actions` 标签 →
   选「子浩开播监测」→ `Run workflow`。
-- 看板数据每次运行后自动更新（workflow 会把 `data/live_sessions.db`、`dashboard/data.json` 等
+- 看板数据每次运行后自动更新（workflow 会把 `data/live_sessions.db`、`docs/data.json` 等
   推回仓库，实现云端持久化，不会重复记开播）。
 - 在手机微信里让「子浩」开播一次，应收到 Server酱 推送；看板状态变「直播中」。
 
