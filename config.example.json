@@ -1,0 +1,23 @@
+{
+  "_说明": "把本文件复制一份、改名为 config.json 再填写。config.json 不会被上传到 GitHub，密钥放里面是安全的。",
+
+  "accounts": [
+    {
+      "name": "我爱播-大号",
+      "rid": "这里填大号的抖音号"
+    },
+    {
+      "name": "我爱播-小号",
+      "rid": "这里填小号的抖音号"
+    }
+  ],
+
+  "_目标说明": "monthly_target_hours 是每月的目标开播小时数，用于计算差距",
+  "monthly_target_hours": 100,
+
+  "_推送说明": "Server酱的 SendKey，形如 SCT123456xxxxx。第2步再填，现在留空即可",
+  "serverchan_key": "",
+
+  "_轮询说明": "每隔多少秒查一次状态。60 秒足够了，太频繁容易被抖音风控",
+  "check_interval_seconds": 60
+}

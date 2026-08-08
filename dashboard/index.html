@@ -1,0 +1,546 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+<meta name="theme-color" content="#E9ECEF" />
+<title>子浩先生开播了么</title>
+<style>
+  :root{
+    --bg:#F4F0E8;        /* 暖米白底 */
+    --card:#FFFFFF;      /* 纯白卡片，与米白底形成对比 */
+    --ink:#3C3A36;       /* 主文字：暖深灰 */
+    --ink-2:#847C70;     /* 次要文字：暖灰 */
+    --line:#EAE3D5;      /* 暖色分割线 */
+    --blue:#8AA6AF;      /* 主色 莫兰迪雾蓝 */
+    --blue-deep:#5C7B84; /* 重点数字/标题：深雾蓝 */
+    --blue-soft:#D9E2E4; /* 浅雾蓝装饰 */
+    --blue-light:#EDE8DF;/* 暖浅底（账号行用） */
+    --off:#A89C8E;       /* 未开播 暖灰 */
+    --off-soft:#ECE5D9;  /* 未开播浅底 */
+  }
+  *{box-sizing:border-box;-webkit-tap-highlight-color:transparent;}
+  html,body{margin:0;padding:0;}
+  body{
+    background:var(--bg);color:var(--ink);
+    font-family:-apple-system,BlinkMacSystemFont,"PingFang SC","Microsoft YaHei",sans-serif;
+    font-size:15px;line-height:1.5;
+    display:flex;justify-content:center;
+  }
+  .phone{
+    width:100%;max-width:430px;min-height:100vh;background:#F4F0E8;
+    display:flex;flex-direction:column;position:relative;padding-bottom:74px;
+  }
+
+  /* —— 顶部标题栏 —— */
+  .topbar{padding:18px 18px 10px;display:flex;align-items:center;justify-content:space-between;}
+  .topbar h1{margin:0;font-size:21px;font-weight:700;letter-spacing:1px;color:var(--blue-deep);}
+  .topbar .icon{
+    width:36px;height:36px;border-radius:50%;
+    background:var(--blue-soft);color:var(--blue-deep);
+    display:flex;align-items:center;justify-content:center;font-size:18px;
+  }
+
+  .page{padding:6px 14px 14px;display:none;}
+  .page.active{display:block;}
+
+  /* —— 通用卡片 —— */
+  .card{
+    background:var(--card);border-radius:20px;padding:16px;
+    box-shadow:0 4px 14px rgba(60,55,45,.07);margin-bottom:14px;
+    border:1px solid rgba(255,255,255,.8);
+  }
+  .card-title-row{display:flex;align-items:center;justify-content:space-between;margin-bottom:14px;}
+  .card-title{font-size:15px;font-weight:600;}
+  .badge{font-size:12px;font-weight:600;color:#fff;background:linear-gradient(135deg,var(--blue),var(--blue-deep));padding:4px 10px;border-radius:999px;}
+
+  /* —— 账号列表 —— */
+  .acc-row{display:flex;align-items:center;gap:14px;padding:12px 0;border-bottom:1px solid var(--line);}
+  .acc-row:last-child{border-bottom:none;margin-bottom:0;}
+  .avatar{
+    width:46px;height:46px;border-radius:50%;flex:0 0 auto;overflow:hidden;
+    display:flex;align-items:center;justify-content:center;
+    font-size:18px;font-weight:700;color:#fff;
+    background:linear-gradient(135deg,var(--blue),var(--blue-deep));
+  }
+  .avatar img{width:100%;height:100%;object-fit:cover;}
+  .avatar.live{box-shadow:0 0 0 3px var(--blue-soft);}
+  .avatar.sm{width:34px;height:34px;font-size:14px;}
+  .acc-info{flex:1;min-width:0;}
+  .acc-name{font-size:16px;font-weight:600;}
+  .acc-sub{font-size:12px;color:var(--ink-2);margin-top:2px;}
+  .status-pill{font-size:12px;font-weight:600;padding:5px 12px;border-radius:999px;background:var(--off-soft);color:var(--off);}
+  .status-pill.on{background:linear-gradient(135deg,var(--blue),var(--blue-deep));color:#fff;}
+
+  /* —— 进度卡片 —— */
+  .progress-card .big{display:flex;align-items:baseline;gap:6px;margin:6px 0 12px;}
+  .progress-card .num{font-size:38px;font-weight:700;color:var(--blue-deep);}
+  .progress-card .pct{font-size:15px;color:var(--ink-2);}
+  .bar{height:10px;border-radius:999px;background:var(--blue-soft);overflow:hidden;}
+  .bar>i{display:block;height:100%;border-radius:999px;background:linear-gradient(90deg,var(--blue),var(--blue-deep));transition:width .6s ease;}
+  .bar-meta{display:flex;justify-content:space-between;margin-top:8px;font-size:12px;color:var(--ink-2);}
+  .stat-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:14px;}
+  .stat-cell{background:#fff;border-radius:12px;padding:12px;border:1px solid var(--blue-soft);}
+  .stat-cell .k{font-size:12px;color:var(--ink-2);}
+  .stat-cell .v{font-size:19px;font-weight:600;margin-top:3px;}
+
+  /* —— 实时推送卡片 —— */
+  .push-row{display:flex;align-items:center;gap:12px;}
+  .push-icon{
+    width:40px;height:40px;border-radius:12px;background:linear-gradient(135deg,var(--blue-light),var(--blue-soft));color:var(--blue-deep);
+    font-size:20px;display:flex;align-items:center;justify-content:center;
+  }
+  .push-text{flex:1;}
+  .push-title{font-size:16px;font-weight:600;}
+  .push-sub{font-size:12px;color:var(--ink-2);margin-top:2px;}
+  .toggle{width:48px;height:28px;border-radius:999px;background:var(--off-soft);position:relative;transition:background .2s;flex:0 0 auto;border:1px solid rgba(0,0,0,.05);}
+  .toggle.on{background:linear-gradient(90deg,var(--blue),var(--blue-deep));}
+  .toggle .knob{width:22px;height:22px;border-radius:50%;background:#fff;position:absolute;top:3px;left:3px;transition:left .2s;box-shadow:0 1px 3px rgba(0,0,0,.15);}
+  .toggle.on .knob{left:23px;}
+  .push-status{margin-top:14px;padding-top:14px;border-top:1px solid var(--line);text-align:center;font-size:13px;color:var(--ink-2);}
+  .push-actions{display:flex;gap:10px;margin-top:14px;}
+  .push-actions button{flex:1;border:none;border-radius:12px;padding:12px 0;background:linear-gradient(135deg,var(--blue),var(--blue-deep));color:#fff;font-size:14px;font-weight:600;cursor:pointer;}
+
+  /* —— 记录列表 —— */
+  .rec{display:flex;align-items:center;gap:12px;padding:13px 0;border-bottom:1px solid var(--line);}
+  .rec:last-child{border-bottom:none;}
+  .rec .who{width:5px;align-self:stretch;border-radius:3px;background:var(--blue);flex:0 0 auto;}
+  .rec .who.avatar{width:34px;height:34px;align-self:center;}
+  .rec .main{flex:1;min-width:0;}
+  .rec .nm{font-size:15px;font-weight:600;}
+  .rec .tm{font-size:12.5px;color:var(--ink-2);margin-top:2px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+  .rec .dur{font-size:14px;font-weight:600;color:var(--blue-deep);text-align:right;flex:0 0 auto;}
+  .badge-live{display:inline-block;font-size:11px;color:var(--blue-deep);background:var(--blue-soft);padding:2px 8px;border-radius:999px;margin-left:6px;vertical-align:middle;}
+  .note{font-size:11.5px;color:var(--ink-2);text-align:center;margin-top:10px;}
+
+  /* —— 底部 tab —— */
+  .tabbar{
+    position:fixed;bottom:0;left:50%;transform:translateX(-50%);
+    width:100%;max-width:430px;
+    background:rgba(255,255,255,.93);backdrop-filter:blur(12px);
+    border-top:1px solid rgba(255,255,255,.7);
+    box-shadow:0 -2px 12px rgba(60,55,45,.06);
+    display:flex;padding:6px 0 calc(6px + env(safe-area-inset-bottom));
+  }
+  .tab{flex:1;text-align:center;font-size:12px;color:var(--ink-2);padding:6px 0;cursor:pointer;transition:color .2s;display:flex;flex-direction:column;align-items:center;gap:3px;}
+  .tab .ic{font-size:20px;line-height:1;}
+  .tab.on{color:var(--blue-deep);font-weight:600;}
+  .err{padding:30px 20px;text-align:center;color:var(--ink-2);font-size:14px;}
+
+  /* —— 头像可点击设置 —— */
+  .avatar-wrap{position:relative;flex:0 0 auto;cursor:pointer;}
+  .avatar-wrap .edit-dot{
+    position:absolute;right:-2px;bottom:-2px;width:18px;height:18px;border-radius:50%;
+    background:var(--blue-deep);color:#fff;font-size:10px;line-height:18px;text-align:center;
+    border:2px solid #fff;box-shadow:0 1px 3px rgba(0,0,0,.2);
+  }
+
+  /* —— 设置头像弹窗 —— */
+  .modal-mask{position:fixed;inset:0;background:rgba(40,55,65,.45);z-index:50;display:none;align-items:center;justify-content:center;padding:20px;}
+  .modal-mask.show{display:flex;}
+  .modal{width:100%;max-width:340px;background:#fff;border-radius:20px;padding:20px;box-shadow:0 12px 40px rgba(0,0,0,.2);}
+  .modal h3{margin:0 0 14px;font-size:17px;font-weight:700;color:var(--blue-deep);}
+  .modal .preview{width:84px;height:84px;border-radius:50%;margin:0 auto 14px;overflow:hidden;display:flex;align-items:center;justify-content:center;font-size:34px;font-weight:700;color:#fff;background:linear-gradient(135deg,var(--blue),var(--blue-deep));}
+  .modal .preview img{width:100%;height:100%;object-fit:cover;}
+  .modal .field{display:flex;flex-direction:column;gap:6px;margin-bottom:12px;}
+  .modal label{font-size:13px;color:var(--ink-2);}
+  .modal input[type=text]{border:1px solid var(--line);border-radius:10px;padding:10px 12px;font-size:14px;outline:none;}
+  .modal input[type=text]:focus{border-color:var(--blue);}
+  .modal .filebtn{display:block;text-align:center;border:1px dashed var(--blue);color:var(--blue-deep);border-radius:10px;padding:10px;font-size:13px;cursor:pointer;}
+  .modal .filebtn input{display:none;}
+  .modal .btns{display:flex;gap:10px;margin-top:6px;}
+  .modal .btns button{flex:1;border:none;border-radius:12px;padding:11px 0;font-size:14px;font-weight:600;cursor:pointer;}
+  .modal .save{background:linear-gradient(135deg,var(--blue),var(--blue-deep));color:#fff;}
+  .modal .clear{background:var(--off-soft);color:var(--ink-2);}
+  .modal .cancel{background:var(--blue-light);color:var(--ink-2);}
+  .modal .hint{font-size:11.5px;color:var(--ink-2);text-align:center;margin-top:10px;line-height:1.5;}
+
+  /* —— 记录行编辑按钮（仅本地可写服务器下显示） —— */
+  .rec-edit{display:none;margin-left:10px;flex:0 0 auto;width:30px;height:30px;border:none;border-radius:8px;background:var(--blue-light);color:var(--blue-deep);font-size:15px;cursor:pointer;align-items:center;justify-content:center;}
+  body.can-edit .rec-edit{display:inline-flex;}
+  .modal input[type=datetime-local]{border:1px solid var(--line);border-radius:10px;padding:10px 12px;font-size:14px;outline:none;width:100%;box-sizing:border-box;}
+  .modal input[type=datetime-local]:focus{border-color:var(--blue);}
+
+</style>
+</head>
+<body>
+<div class="phone">
+
+  <!-- 直播状态页 -->
+  <section class="page active" id="page-status">
+    <div class="topbar">
+      <h1>子浩先生开播了么</h1>
+      <div class="icon">🔔</div>
+    </div>
+
+    <div class="card">
+      <div class="card-title-row">
+        <span class="card-title">子浩账号</span>
+        <span class="badge" id="acc-count">0个账号</span>
+      </div>
+      <div id="acc-list"></div>
+    </div>
+
+    <div class="card">
+      <div class="push-row">
+        <div class="push-icon">🔔</div>
+        <div class="push-text">
+          <div class="push-title">实时推送</div>
+          <div class="push-sub">开播 / 下播第一时间通知微信</div>
+        </div>
+        <div class="toggle on" id="push-toggle"><div class="knob"></div></div>
+      </div>
+      <div class="push-status" id="push-status">Server酱 已连接</div>
+      <div class="push-actions">
+        <button onclick="switchTab('records')">查看时长记录</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- 时长记录页 -->
+  <section class="page" id="page-records">
+    <div class="topbar"><h1>时长记录</h1></div>
+
+    <div class="card progress-card">
+      <div class="card-title">本月开播进度</div>
+      <div class="big"><span class="num" id="pct">—</span><span class="pct">%</span></div>
+      <div class="bar"><i id="bar" style="width:0%"></i></div>
+      <div class="bar-meta"><span id="done">已播 —</span><span id="target">目标 —</span></div>
+      <div class="stat-grid">
+        <div class="stat-cell"><div class="k">已播时长</div><div class="v" id="c-done">—</div></div>
+        <div class="stat-cell"><div class="k">剩余时长</div><div class="v" id="c-remain">—</div></div>
+        <div class="stat-cell"><div class="k">剩余天数</div><div class="v" id="c-days">—</div></div>
+        <div class="stat-cell"><div class="k">每天需播</div><div class="v" id="c-daily">—</div></div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-title" style="margin-bottom:8px;">历史直播记录</div>
+      <div id="rec-list"></div>
+      <div class="note">单场不足 1 小时的直播不计入月度时长统计</div>
+    </div>
+  </section>
+
+  <nav class="tabbar">
+    <div class="tab on" data-page="status"><span class="ic">📡</span><span>直播状态</span></div>
+    <div class="tab" data-page="records"><span class="ic">⏱</span><span>时长记录</span></div>
+  </nav>
+</div>
+
+<!-- 设置头像弹窗 -->
+<div class="modal-mask" id="avatar-modal">
+  <div class="modal">
+    <h3 id="modal-title">设置头像</h3>
+    <div class="preview" id="modal-preview">😊</div>
+    <div class="field">
+      <label>上传图片（手机相册/电脑文件）</label>
+      <label class="filebtn">选择图片
+        <input type="file" id="avatar-file" accept="image/*" />
+      </label>
+    </div>
+    <div class="field">
+      <label>或填 emoji / 图片网址</label>
+      <input type="text" id="avatar-text" placeholder="例如 🎤  或 https://.../x.png" />
+    </div>
+    <div class="btns">
+      <button class="save" id="avatar-save">保存</button>
+      <button class="clear" id="avatar-clear">清除</button>
+      <button class="cancel" id="avatar-cancel">取消</button>
+    </div>
+    <div class="hint">头像保存在本机浏览器，不联网、不上传。<br>换设备需重新设置。</div>
+  </div>
+</div>
+
+<!-- 校正直播记录弹窗 -->
+<div class="modal-mask" id="edit-modal">
+  <div class="modal">
+    <h3>校正直播记录</h3>
+    <div class="field">
+      <label>开播时间</label>
+      <input type="datetime-local" id="edit-start" />
+    </div>
+    <div class="field">
+      <label>下播时间（留空 = 进行中）</label>
+      <input type="datetime-local" id="edit-end" />
+    </div>
+    <div class="btns">
+      <button class="save" id="edit-save">保存</button>
+      <button class="cancel" id="edit-cancel">取消</button>
+    </div>
+    <div class="hint">修改将写入数据库并重算时长，<br>仅可在本机「可写服务器」下操作。</div>
+  </div>
+</div>
+
+<script src="data.js"></script>
+<script>
+  function switchTab(name){
+    document.querySelectorAll('.tab').forEach(x=>x.classList.remove('on'));
+    document.querySelectorAll('.page').forEach(x=>x.classList.remove('active'));
+    document.querySelector('.tab[data-page="'+name+'"]').classList.add('on');
+    document.getElementById('page-'+name).classList.add('active');
+  }
+  document.querySelectorAll('.tab').forEach(t=>{
+    t.addEventListener('click',()=>switchTab(t.dataset.page));
+  });
+
+  function fmtH(h){
+    if(typeof h === 'string') return h;
+    const total=Math.round(h*60), hh=Math.floor(total/60), mm=total%60;
+    return hh?`${hh}小时${mm}分`:`${mm}分`;
+  }
+
+  // 自定义头像：图片(URL / data: / 本地路径)用 <img>，否则当成 emoji/文字直接显示
+  function avatarInner(av, initial){
+    if(av && (/^https?:\/\//.test(av) || /^data:/.test(av) || /\.(png|jpe?g|gif|webp|svg)$/i.test(av))){
+      return `<img src="${av}" alt="">`;
+    }
+    return av || initial;
+  }
+
+  // 头像本地设置：按账号(rid)存在浏览器 localStorage，不联网、不上传
+  function getOverride(rid){
+    try{ return localStorage.getItem('zhibo_avatar_'+rid) || ''; }catch(e){ return ''; }
+  }
+  function setOverride(rid, val){
+    try{ val? localStorage.setItem('zhibo_avatar_'+rid, val) : localStorage.removeItem('zhibo_avatar_'+rid); }catch(e){}
+  }
+  // 取最终用的头像：本地设置优先，其次配置文件里的，都没有用昵称首字
+  function resolveAvatar(rid, cfgAvatar, initial){
+    return getOverride(rid) || cfgAvatar || initial;
+  }
+
+  async function load(){
+    let data;
+    try{
+      const r=await fetch('data.json?t='+Date.now());
+      if(!r.ok) throw new Error('HTTP '+r.status);
+      data=await r.json();
+      render(data, false);
+    }catch(e){
+      if(window.__DASHBOARD_DATA__){
+        render(window.__DASHBOARD_DATA__, true);
+      }else{
+        document.getElementById('acc-list').innerHTML='<div class="err">无法读取数据</div>';
+      }
+    }
+  }
+
+  function render(d, offline){
+    lastData=d; lastOffline=offline;
+    lastSessions=d.sessions||[];
+    const r=d.report||{};
+    const pct=r.progress_percent||0;
+    document.getElementById('pct').textContent=pct;
+    document.getElementById('bar').style.width=Math.min(100,pct)+'%';
+    document.getElementById('done').textContent='已播 '+fmtH(r.done_hours||0);
+    document.getElementById('target').textContent='目标 '+fmtH(r.target_hours||0);
+    document.getElementById('c-done').textContent=fmtH(r.done_hours||0);
+    document.getElementById('c-remain').textContent=fmtH(r.remain_hours||0);
+    document.getElementById('c-days').textContent=(r.days_left||0)+'天';
+    document.getElementById('c-daily').textContent=fmtH(r.daily_need_hours||0);
+
+    const accounts=d.accounts||[];
+    document.getElementById('acc-count').textContent=accounts.length+'个账号';
+    const list=document.getElementById('acc-list');
+    list.innerHTML='';
+    accounts.forEach(a=>{
+      const on=!!a.is_living;
+      const initial=(a.nickname||'?').charAt(0);
+      const av=resolveAvatar(a.rid, a.avatar, initial);
+      const div=document.createElement('div');
+      div.className='acc-row';
+      div.innerHTML=`
+        <div class="avatar-wrap" data-rid="${a.rid}">
+          <div class="avatar ${on?'live':''}">${avatarInner(av, initial)}</div>
+          <span class="edit-dot">✎</span>
+        </div>
+        <div class="acc-info">
+          <div class="acc-name">${a.nickname||'—'}</div>
+          ${on?'<div class="acc-sub">'+(a.title||'直播中')+'</div>':''}
+        </div>
+        <span class="status-pill ${on?'on':''}">${on?'直播中':'未开播'}</span>`;
+      list.appendChild(div);
+    });
+
+    document.getElementById('push-status').textContent=
+      (offline?'（离线数据）':'')+'Server酱 已连接 · 更新于 '+d.updated_at;
+
+    const rl=document.getElementById('rec-list');
+    rl.innerHTML='';
+    const sess=d.sessions||[];
+    if(!sess.length){
+      rl.innerHTML='<div class="note" style="padding:18px 0;">暂无直播记录</div>';
+    }
+    sess.forEach(s=>{
+      const live=(s.end==='进行中');
+      const initial=(s.nickname||'?').charAt(0);
+      const av=resolveAvatar(s.rid, s.avatar, initial);
+      const row=document.createElement('div');
+      row.className='rec';
+      row.innerHTML=`
+        <span class="who avatar sm">${avatarInner(av, initial)}</span>
+        <div class="main">
+          <div class="nm">${s.nickname||'—'}${live?'<span class="badge-live">进行中</span>':''}</div>
+          <div class="tm">${s.start} → ${s.end}</div>
+        </div>
+        <div class="dur">${s.duration}<button class="rec-edit" data-id="${s.id}">✎</button></div>`;
+      rl.appendChild(row);
+    });
+  }
+
+  // —— 点击头像设置（本地存储，不联网）——
+  let editRid = null;       // 当前正在设置哪个账号
+  let pendingImg = null;    // 用户刚选的图片(data URL)，优先于文字
+  let lastData = null, lastOffline = false;
+
+  function rerender(){ if(lastData) render(lastData, lastOffline); }
+
+  function previewFrom(val){
+    const p=document.getElementById('modal-preview');
+    if(val && (/^https?:\/\//.test(val) || /^data:/.test(val) || /\.(png|jpe?g|gif|webp|svg)$/i.test(val))){
+      p.innerHTML=`<img src="${val}" alt="">`;
+    }else{
+      p.textContent = val || '😊';
+    }
+  }
+
+  function openAvatarModal(rid){
+    editRid = rid;
+    pendingImg = null;
+    const cur = getOverride(rid);
+    document.getElementById('avatar-text').value = cur && !/^(https?:\/\/|data:)/.test(cur) && !/\.(png|jpe?g|gif|webp|svg)$/i.test(cur) ? cur : '';
+    previewFrom(cur || '😊');
+    document.getElementById('avatar-modal').classList.add('show');
+  }
+  function closeAvatarModal(){
+    document.getElementById('avatar-modal').classList.remove('show');
+    editRid = null; pendingImg = null;
+  }
+
+  // 图片选好后压缩到 256px 以内再存，避免把手机浏览器存储撑爆
+  function fileToDataURL(file, cb){
+    const reader=new FileReader();
+    reader.onload=e=>{
+      const img=new Image();
+      img.onload=()=>{
+        let w=img.width, h=img.height, max=256;
+        if(w>h && w>max){ h=Math.round(h*max/w); w=max; }
+        else if(h>max){ w=Math.round(w*max/h); h=max; }
+        const c=document.createElement('canvas'); c.width=w; c.height=h;
+        c.getContext('2d').drawImage(img,0,0,w,h);
+        cb(c.toDataURL('image/jpeg',0.85));
+      };
+      img.src=e.target.result;
+    };
+    reader.readAsDataURL(file);
+  }
+
+  document.getElementById('avatar-file').addEventListener('change', function(){
+    const f=this.files[0]; if(!f) return;
+    fileToDataURL(f, d=>{ pendingImg=d; previewFrom(d); document.getElementById('avatar-text').value=''; });
+  });
+  document.getElementById('avatar-text').addEventListener('input', function(){
+    pendingImg=null; previewFrom(this.value.trim());
+  });
+  document.getElementById('avatar-save').addEventListener('click', function(){
+    if(!editRid) return;
+    const txt=document.getElementById('avatar-text').value.trim();
+    const val = pendingImg || txt;   // 选了图用图，否则用文字(emoji/网址)
+    setOverride(editRid, val);
+    closeAvatarModal();
+    rerender();
+  });
+  document.getElementById('avatar-clear').addEventListener('click', function(){
+    if(editRid){ setOverride(editRid, ''); }
+    closeAvatarModal();
+    rerender();
+  });
+  document.getElementById('avatar-cancel').addEventListener('click', closeAvatarModal);
+  // 点遮罩空白处也可关闭
+  document.getElementById('avatar-modal').addEventListener('click', e=>{ if(e.target.id==='avatar-modal') closeAvatarModal(); });
+  // 委托：点击头像打开设置
+  document.getElementById('acc-list').addEventListener('click', e=>{
+    const w=e.target.closest('.avatar-wrap'); if(w) openAvatarModal(w.dataset.rid);
+  });
+
+  // —— 记录校正（需本地可写服务器）——
+  let canEdit=false;
+  let lastSessions=[];
+  let editId=null;
+
+  function toInput(dt){ if(!dt || dt==='进行中') return ''; return String(dt).replace(' ','T').slice(0,16); }
+  function fromInput(v){ if(!v) return ''; return String(v).replace('T',' ') + ':00'; }
+
+  // 编辑功能仅在"可写服务器(http/https)下"可用：file:// 直接打开没有后端写接口则不显示
+  function enableEdit(){ canEdit=true; document.body.classList.add('can-edit'); }
+  if(location.protocol === 'http:' || location.protocol === 'https:'){ enableEdit(); }
+  // 再尝试和后端握手（兼容预览面板等跨域场景）
+  fetch('/api/health').then(r=>r.json()).then(j=>{
+    if(j && j.ok){ enableEdit(); }
+  }).catch(()=>{});
+
+  function openEditModal(s){
+    editId=s.id;
+    document.getElementById('edit-start').value=toInput(s.start);
+    document.getElementById('edit-end').value=toInput(s.end==='进行中'?null:s.end);
+    document.getElementById('edit-modal').classList.add('show');
+  }
+  function closeEditModal(){ document.getElementById('edit-modal').classList.remove('show'); editId=null; }
+  document.getElementById('edit-save').addEventListener('click', function(){
+    if(editId==null) return;
+    const start=fromInput(document.getElementById('edit-start').value);
+    const end=fromInput(document.getElementById('edit-end').value);
+    if(!start){ alert('请填写开播时间'); return; }
+    fetch('/api/update_session',{
+      method:'POST', headers:{'Content-Type':'application/json'},
+      body:JSON.stringify({id:editId, start_time:start, end_time:end})
+    }).then(r=>r.json()).then(j=>{
+      if(j.ok){ closeEditModal(); load(); }
+      else { alert('保存失败：'+(j.error||'')); }
+    }).catch(e=>alert('保存失败（需在本地可写服务器下编辑）：'+e));
+  });
+  document.getElementById('edit-cancel').addEventListener('click', closeEditModal);
+  document.getElementById('edit-modal').addEventListener('click', e=>{ if(e.target.id==='edit-modal') closeEditModal(); });
+  document.getElementById('rec-list').addEventListener('click', e=>{
+    const b=e.target.closest('.rec-edit'); if(!b) return;
+    const id=Number(b.dataset.id); const s=lastSessions.find(x=>x.id===id); if(s) openEditModal(s);
+  });
+
+  // —— 实时推送开关（真实控制后端）——
+  let pushEnabled = true;
+  const pushToggle = document.getElementById('push-toggle');
+  const pushStatus = document.getElementById('push-status');
+
+  function updatePushUI(enabled){
+    pushEnabled = enabled;
+    pushToggle.classList.toggle('on', enabled);
+    pushStatus.textContent = (enabled ? '✅ 推送开启 · ' : '🔕 推送已暂停 · ') + 'Server酱 已连接';
+  }
+
+  // 初始化：从后端读取当前开关状态
+  fetch('/api/push_status').then(r=>r.json()).then(j=>{
+    if(j && typeof j.enabled === 'boolean') updatePushUI(j.enabled);
+  }).catch(()=>{});
+
+  pushToggle.addEventListener('click', function(){
+    const want = !pushEnabled;
+    fetch('/api/push_toggle',{
+      method:'POST', headers:{'Content-Type':'application/json'},
+      body:JSON.stringify({enabled:want})
+    }).then(r=>r.json()).then(j=>{
+      if(j.ok){ updatePushUI(j.enabled); }
+      else { updatePushUI(!want); }
+    }).catch(()=>{
+      // 离线或失败，回滚 UI
+      updatePushUI(!want);
+      alert('切换失败，请确认通过本机 serve.py 打开看板。');
+    });
+    // 先乐观更新
+    updatePushUI(want);
+  });
+
+  load();
+  setInterval(load, 60000);
+</script>
+</body>
+</html>

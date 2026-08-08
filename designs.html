@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>看板配色方案 · 5 选 1</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, "PingFang SC", "Microsoft YaHei", system-ui, sans-serif;
+    background: #E9EDF2;
+    color: #1d2733;
+    padding: 32px 28px 48px;
+  }
+  .page-title { font-size: 19px; font-weight: 600; letter-spacing: .3px; }
+  .page-sub { font-size: 13px; color: #6a7686; margin-top: 6px; margin-bottom: 26px; }
+  .row { display: flex; gap: 22px; overflow-x: auto; padding: 6px 2px 18px; }
+  .col { flex: 0 0 auto; width: 224px; }
+  .tag {
+    text-align: center; font-size: 13px; font-weight: 600;
+    color: #2b3744; margin-bottom: 12px;
+  }
+  .tag small { display: block; font-weight: 400; color: #8b95a3; font-size: 11px; margin-top: 3px; }
+  .phone {
+    width: 224px; height: 472px; border-radius: 36px; padding: 10px;
+    background: #0b0d11; box-shadow: 0 18px 40px rgba(20,40,80,.20);
+    margin: 0 auto;
+  }
+  .screen {
+    border-radius: 28px; height: 100%; padding: 20px 17px;
+    display: flex; flex-direction: column; gap: 14px; overflow: hidden;
+    position: relative;
+  }
+  .top { display: flex; align-items: center; justify-content: space-between; }
+  .brand { font-size: 14px; font-weight: 600; }
+  .status { display: flex; align-items: center; gap: 6px; font-size: 11px; }
+  .led { width: 8px; height: 8px; border-radius: 50%; }
+  .led.off { background: #9aa7b6; }
+  .hero { border-radius: 18px; padding: 18px 16px; }
+  .hero .pct { font-size: 40px; font-weight: 600; line-height: 1; }
+  .hero .pct span { font-size: 18px; font-weight: 500; }
+  .bar { height: 8px; border-radius: 8px; margin-top: 14px; overflow: hidden; }
+  .bar > i { display: block; height: 100%; border-radius: 8px; }
+  .hero .desc { font-size: 11px; margin-top: 12px; opacity: .85; }
+  .stats { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 10px; }
+  .stat { border-radius: 14px; padding: 12px 8px; text-align: center; }
+  .stat b { display: block; font-size: 16px; font-weight: 600; }
+  .stat span { font-size: 10px; opacity: .7; }
+  .acc { display: flex; flex-direction: column; gap: 8px; margin-top: auto; }
+  .chip { border-radius: 12px; padding: 11px 13px; font-size: 12px; display: flex; justify-content: space-between; align-items: center; }
+  .chip .d { width: 7px; height: 7px; border-radius: 50%; background: #9aa7b6; }
+
+  /* ===== A. 浅色·云感 Soft Light ===== */
+  .s-light { background: linear-gradient(180deg,#ffffff,#f1f6fd); color: #16263f; }
+  .s-light .brand { color: #16263f; }
+  .s-light .status { color: #6e829b; }
+  .s-light .hero { background: #ffffff; box-shadow: 0 6px 18px rgba(40,90,160,.08); }
+  .s-light .hero .pct { color: #1f6fd0; }
+  .s-light .hero .desc { color: #6e829b; }
+  .s-light .bar { background: #e4eefa; }
+  .s-light .bar > i { background: linear-gradient(90deg,#5bb0ff,#2e8de0); }
+  .s-light .stat { background: #ffffff; box-shadow: 0 4px 12px rgba(40,90,160,.06); }
+  .s-light .stat b { color: #1f6fd0; }
+  .s-light .stat span { color: #7c8ca0; }
+  .s-light .chip { background: #eaf3fd; color: #2e7fd0; }
+  .s-light .chip .d { background: #aab8c8; }
+
+  /* ===== B. 深色·极光 Aurora Dark ===== */
+  .s-dark { background: linear-gradient(180deg,#0a1124,#0e1a33); color: #e8f1ff; }
+  .s-dark .brand { color: #eaf3ff; }
+  .s-dark .status { color: #8597b5; }
+  .s-dark .hero { background: rgba(255,255,255,.04); border: .5px solid rgba(120,180,255,.18); }
+  .s-dark .hero .pct { color: #38bdf8; text-shadow: 0 0 18px rgba(56,189,248,.45); }
+  .s-dark .hero .desc { color: #8597b5; }
+  .s-dark .bar { background: rgba(255,255,255,.08); }
+  .s-dark .bar > i { background: linear-gradient(90deg,#22d3ee,#3b82f6); box-shadow: 0 0 12px rgba(56,189,248,.5); }
+  .s-dark .stat { background: rgba(255,255,255,.05); }
+  .s-dark .stat b { color: #7dd3fc; }
+  .s-dark .stat span { color: #8597b5; }
+  .s-dark .chip { background: rgba(56,189,248,.12); color: #7dd3fc; }
+  .s-dark .chip .d { background: #5b6b85; }
+
+  /* ===== C. 玻璃拟态 Glassmorphism ===== */
+  .s-glass { background: linear-gradient(155deg,#5aa9ff,#7c6ff0 55%,#56c7f0); color: #ffffff; }
+  .s-glass .brand { color: #ffffff; }
+  .s-glass .status { color: rgba(255,255,255,.85); }
+  .s-glass .hero, .s-glass .stat, .s-glass .chip {
+    background: rgba(255,255,255,.18);
+    border: 1px solid rgba(255,255,255,.30);
+    backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px);
+  }
+  .s-glass .hero .pct { color: #ffffff; }
+  .s-glass .hero .desc { color: rgba(255,255,255,.9); }
+  .s-glass .bar { background: rgba(255,255,255,.25); }
+  .s-glass .bar > i { background: rgba(255,255,255,.95); }
+  .s-glass .stat b { color: #ffffff; }
+  .s-glass .stat span { color: rgba(255,255,255,.85); }
+  .s-glass .chip { color: #ffffff; }
+  .s-glass .chip .d { background: rgba(255,255,255,.7); }
+
+  /* ===== D. 渐变多巴胺 Gradient Pop ===== */
+  .s-gradient { background: #ffffff; color: #16263f; }
+  .s-gradient .top { display: none; }
+  .s-gradient .hero {
+    background: linear-gradient(135deg,#3b9df5,#22d3ee);
+    color: #fff; margin: -20px -17px 0; border-radius: 28px 28px 22px 22px; padding: 26px 20px 20px;
+  }
+  .s-gradient .hero .brand { color: #fff; font-size: 15px; }
+  .s-gradient .hero .status { color: rgba(255,255,255,.9); }
+  .s-gradient .hero .pct { color: #fff; }
+  .s-gradient .hero .desc { color: rgba(255,255,255,.92); }
+  .s-gradient .bar { background: rgba(255,255,255,.35); }
+  .s-gradient .bar > i { background: #ffffff; }
+  .s-gradient .stat { background: #f3f8ff; }
+  .s-gradient .stat b { color: #1f6fd0; }
+  .s-gradient .stat span { color: #7c8ca0; }
+  .s-gradient .chip { background: #eef5fd; color: #2e7fd0; }
+  .s-gradient .chip .d { background: #aab8c8; }
+
+  /* ===== E. 莫兰迪·雾蓝 Muted Elegant ===== */
+  .s-muted { background: #f4f2ed; color: #36404e; }
+  .s-muted .brand { color: #36404e; }
+  .s-muted .status { color: #8a93a0; }
+  .s-muted .hero { background: #fbfaf7; box-shadow: 0 4px 14px rgba(90,100,110,.08); }
+  .s-muted .hero .pct { color: #5f8099; }
+  .s-muted .hero .desc { color: #8a93a0; }
+  .s-muted .bar { background: #e7e3da; }
+  .s-muted .bar > i { background: linear-gradient(90deg,#9dbed6,#7c9fba); }
+  .s-muted .stat { background: #fbfaf7; box-shadow: 0 3px 10px rgba(90,100,110,.06); }
+  .s-muted .stat b { color: #5f8099; }
+  .s-muted .stat span { color: #9aa1ab; }
+  .s-muted .chip { background: #ece8e0; color: #6e7f90; }
+  .s-muted .chip .d { background: #b3b0a6; }
+</style>
+</head>
+<body>
+  <div class="page-title">子浩开播看板 · 配色方案</div>
+  <div class="page-sub">同一套数据，5 种天蓝色气质 — 挑一个顺眼的，我照着实现成真网页</div>
+
+  <div class="row">
+
+    <div class="col">
+      <div class="tag">A · 浅色云感<small>干净 · Apple 风</small></div>
+      <div class="phone"><div class="phone" style="box-shadow:none">
+        <div class="screen s-light">
+          <div class="top"><div class="brand">子浩开播看板</div><div class="status"><span class="led off"></span>未开播</div></div>
+          <div class="hero">
+            <div class="pct">21<span>%</span></div>
+            <div class="bar"><i style="width:21%"></i></div>
+            <div class="desc">本月目标 156h · 已完成 32.75h</div>
+          </div>
+          <div class="stats">
+            <div class="stat"><b>32.75h</b><span>已播</span></div>
+            <div class="stat"><b>123.25h</b><span>剩余</span></div>
+            <div class="stat"><b>5.13h</b><span>日均</span></div>
+          </div>
+          <div class="acc">
+            <div class="chip">大号 Zihaolaoshi. <span class="d"></span></div>
+            <div class="chip">小号 zihaolaoshi <span class="d"></span></div>
+          </div>
+        </div>
+      </div></div>
+    </div>
+
+    <div class="col">
+      <div class="tag">B · 深色极光<small>科技 · 直播感</small></div>
+      <div class="phone"><div class="phone" style="box-shadow:none">
+        <div class="screen s-dark">
+          <div class="top"><div class="brand">子浩开播看板</div><div class="status"><span class="led off"></span>未开播</div></div>
+          <div class="hero">
+            <div class="pct">21<span>%</span></div>
+            <div class="bar"><i style="width:21%"></i></div>
+            <div class="desc">本月目标 156h · 已完成 32.75h</div>
+          </div>
+          <div class="stats">
+            <div class="stat"><b>32.75h</b><span>已播</span></div>
+            <div class="stat"><b>123.25h</b><span>剩余</span></div>
+            <div class="stat"><b>5.13h</b><span>日均</span></div>
+          </div>
+          <div class="acc">
+            <div class="chip">大号 Zihaolaoshi. <span class="d"></span></div>
+            <div class="chip">小号 zihaolaoshi <span class="d"></span></div>
+          </div>
+        </div>
+      </div></div>
+    </div>
+
+    <div class="col">
+      <div class="tag">C · 玻璃拟态<small>通透 · 高级感</small></div>
+      <div class="phone"><div class="phone" style="box-shadow:none">
+        <div class="screen s-glass">
+          <div class="top"><div class="brand">子浩开播看板</div><div class="status"><span class="led off"></span>未开播</div></div>
+          <div class="hero">
+            <div class="pct">21<span>%</span></div>
+            <div class="bar"><i style="width:21%"></i></div>
+            <div class="desc">本月目标 156h · 已完成 32.75h</div>
+          </div>
+          <div class="stats">
+            <div class="stat"><b>32.75h</b><span>已播</span></div>
+            <div class="stat"><b>123.25h</b><span>剩余</span></div>
+            <div class="stat"><b>5.13h</b><span>日均</span></div>
+          </div>
+          <div class="acc">
+            <div class="chip">大号 Zihaolaoshi. <span class="d"></span></div>
+            <div class="chip">小号 zihaolaoshi <span class="d"></span></div>
+          </div>
+        </div>
+      </div></div>
+    </div>
+
+    <div class="col">
+      <div class="tag">D · 渐变多巴胺<small>活力 · 年轻感</small></div>
+      <div class="phone"><div class="phone" style="box-shadow:none">
+        <div class="screen s-gradient">
+          <div class="top"><div class="brand">子浩开播看板</div><div class="status"><span class="led off"></span>未开播</div></div>
+          <div class="hero">
+            <div class="pct">21<span>%</span></div>
+            <div class="bar"><i style="width:21%"></i></div>
+            <div class="desc">本月目标 156h · 已完成 32.75h</div>
+          </div>
+          <div class="stats">
+            <div class="stat"><b>32.75h</b><span>已播</span></div>
+            <div class="stat"><b>123.25h</b><span>剩余</span></div>
+            <div class="stat"><b>5.13h</b><span>日均</span></div>
+          </div>
+          <div class="acc">
+            <div class="chip">大号 Zihaolaoshi. <span class="d"></span></div>
+            <div class="chip">小号 zihaolaoshi <span class="d"></span></div>
+          </div>
+        </div>
+      </div></div>
+    </div>
+
+    <div class="col">
+      <div class="tag">E · 莫兰迪雾蓝<small>柔和 · 不刺眼</small></div>
+      <div class="phone"><div class="phone" style="box-shadow:none">
+        <div class="screen s-muted">
+          <div class="top"><div class="brand">子浩开播看板</div><div class="status"><span class="led off"></span>未开播</div></div>
+          <div class="hero">
+            <div class="pct">21<span>%</span></div>
+            <div class="bar"><i style="width:21%"></i></div>
+            <div class="desc">本月目标 156h · 已完成 32.75h</div>
+          </div>
+          <div class="stats">
+            <div class="stat"><b>32.75h</b><span>已播</span></div>
+            <div class="stat"><b>123.25h</b><span>剩余</span></div>
+            <div class="stat"><b>5.13h</b><span>日均</span></div>
+          </div>
+          <div class="acc">
+            <div class="chip">大号 Zihaolaoshi. <span class="d"></span></div>
+            <div class="chip">小号 zihaolaoshi <span class="d"></span></div>
+          </div>
+        </div>
+      </div></div>
+    </div>
+
+  </div>
+</body>
+</html>

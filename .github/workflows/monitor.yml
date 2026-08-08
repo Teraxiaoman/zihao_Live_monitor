@@ -1,0 +1,67 @@
+name: 子浩开播监测
+
+# 触发方式：
+#   1) 定时：每 10 分钟跑一次（GitHub 的 cron 使用 UTC 时间，频率不变）
+#   2) 手动：在 Actions 页面点 "Run workflow" 立即触发（调试用）
+on:
+  schedule:
+    - cron: '*/10 * * * *'
+  workflow_dispatch:
+
+# 需要 contents: write 才能把更新后的数据文件推回仓库
+permissions:
+  contents: write
+
+# 防止上一次还没跑完、下一次又启动（避免数据 push 冲突）
+concurrency:
+  group: monitor
+  cancel-in-progress: false
+
+jobs:
+  monitor:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    env:
+      # 云端账号配置（不含密钥，可安全公开）。与本地 config.json 的 accounts 保持一致
+      MONITOR_ACCOUNTS: '[{"name":"子浩.","rid":"Zihaolaoshi."},{"name":"子浩（沉淀版）.","rid":"zihaolaoshi"}]'
+      MONITOR_TARGET_HOURS: '156'
+    steps:
+      - name: 检出代码
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0   # 需要完整历史，才能 pull/push 数据文件
+
+      - name: 配置 git 身份（用于回写数据）
+        run: |
+          git config user.name "monitor-bot"
+          git config user.email "monitor@users.noreply.github.com"
+
+      - name: 设置 Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.13'
+
+      - name: 安装依赖
+        run: pip install -r requirements.txt
+
+      - name: 拉取最新数据（云端持久化的关键：先拿到上次的场次与状态）
+        run: git pull --ff-only origin || true
+
+      - name: 运行监测（单次）- 接通微信推送
+        env:
+          SERVERCHAN_KEY: ${{ secrets.SERVERCHAN_KEY }}
+        run: python monitor.py --once
+
+      - name: 生成看板数据（供 GitHub Pages 展示）
+        run: python gen_data.py
+
+      - name: 提交并推送数据更新
+        run: |
+          git add -A
+          if git diff --cached --quiet; then
+            echo "无数据变化，跳过提交"
+          else
+            git commit -m "chore: 自动更新监测数据 $(TZ=Asia/Shanghai date +'%Y-%m-%d %H:%M')"
+            git pull --rebase --autostash origin "${GITHUB_REF_NAME}" || true
+            git push
+          fi

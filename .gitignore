@@ -1,0 +1,22 @@
+# 配置文件里有 Server酱 密钥，绝对不能传到 GitHub
+config.json
+
+# 数据库和运行数据（大部分是临时/本地文件，不追踪）
+data/*.db
+data/*.sqlite3
+data/*.json
+# 但以下状态文件需要被追踪，以便云端持久化（这些文件不含任何密钥）
+!data/live_sessions.db
+!data/state.json
+!data/push_state.json
+!data/.gitkeep
+
+# Python 缓存
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+
+# 编辑器
+.vscode/
+.idea/
