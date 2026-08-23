@@ -1,15 +1,15 @@
 {
-  "updated_at": "2026-08-23 11:50:19",
+  "updated_at": "2026-08-23 12:14:34",
   "report": {
     "year": 2026,
     "month": 8,
-    "done_hours": 109.15,
+    "done_hours": 109.55,
     "target_hours": 156,
-    "remain_hours": 46.85,
+    "remain_hours": 46.45,
     "is_current_month": true,
     "days_left": 9,
-    "daily_need_hours": 5.21,
-    "progress_percent": 70.0
+    "daily_need_hours": 5.16,
+    "progress_percent": 70.2
   },
   "accounts": [
     {
@@ -18,7 +18,7 @@
       "avatar": "",
       "is_living": true,
       "title": "“幻想不是止痛药”",
-      "user_count": "7"
+      "user_count": "5"
     },
     {
       "rid": "zihaolaoshi",
