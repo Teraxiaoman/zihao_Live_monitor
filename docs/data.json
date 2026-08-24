@@ -1,15 +1,15 @@
 {
-  "updated_at": "2026-08-24 15:51:36",
+  "updated_at": "2026-08-24 16:25:06",
   "report": {
     "year": 2026,
     "month": 8,
-    "done_hours": 115.98,
+    "done_hours": 116.54,
     "target_hours": 156,
-    "remain_hours": 40.02,
+    "remain_hours": 39.46,
     "is_current_month": true,
     "days_left": 8,
-    "daily_need_hours": 5.0,
-    "progress_percent": 74.3
+    "daily_need_hours": 4.93,
+    "progress_percent": 74.7
   },
   "accounts": [
     {
@@ -17,9 +17,8 @@
       "nickname": "子浩.",
       "avatar": "",
       "is_living": false,
-      "title": "",
-      "user_count": "",
-      "error": "抖音返回错误: 未知"
+      "title": "“幻想不是止痛药”",
+      "user_count": "0"
     },
     {
       "rid": "zihaolaoshi",
@@ -37,8 +36,8 @@
       "nickname": "子浩.",
       "avatar": "",
       "start": "2026-08-24 11:46:33",
-      "end": "进行中",
-      "duration": "进行中"
+      "end": "2026-08-24 16:25:03",
+      "duration": "4小时38分"
     },
     {
       "id": 75,
