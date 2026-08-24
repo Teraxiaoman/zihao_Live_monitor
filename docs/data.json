@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-08-24 11:13:51",
+  "updated_at": "2026-08-24 11:46:36",
   "report": {
     "year": 2026,
     "month": 8,
@@ -32,6 +32,15 @@
     }
   ],
   "sessions": [
+    {
+      "id": 76,
+      "rid": "Zihaolaoshi.",
+      "nickname": "子浩.",
+      "avatar": "",
+      "start": "2026-08-24 11:46:33",
+      "end": "进行中",
+      "duration": "进行中"
+    },
     {
       "id": 75,
       "rid": "Zihaolaoshi.",
