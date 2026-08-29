@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-08-28 22:42:02",
+  "updated_at": "2026-08-29 03:53:47",
   "report": {
     "year": 2026,
     "month": 8,
@@ -7,8 +7,8 @@
     "target_hours": 156,
     "remain_hours": 30.31,
     "is_current_month": true,
-    "days_left": 4,
-    "daily_need_hours": 7.58,
+    "days_left": 3,
+    "daily_need_hours": 10.1,
     "progress_percent": 80.6
   },
   "accounts": [
