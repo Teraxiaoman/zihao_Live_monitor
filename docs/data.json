@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-09-01 07:45:06",
+  "updated_at": "2026-09-01 12:47:39",
   "report": {
     "year": 2026,
     "month": 9,
@@ -16,22 +16,29 @@
       "rid": "Zihaolaoshi.",
       "nickname": "子浩.",
       "avatar": "",
-      "is_living": false,
-      "title": "",
-      "user_count": "",
-      "error": "返回的不是 JSON，抖音接口可能改版了"
+      "is_living": true,
+      "title": "“幻想不是止痛药”",
+      "user_count": "8"
     },
     {
       "rid": "zihaolaoshi",
       "nickname": "子浩（沉淀版）.",
       "avatar": "",
       "is_living": false,
-      "title": "",
-      "user_count": "",
-      "error": "返回的不是 JSON，抖音接口可能改版了"
+      "title": "别错过这场精彩直播啦",
+      "user_count": "0"
     }
   ],
   "sessions": [
+    {
+      "id": 81,
+      "rid": "Zihaolaoshi.",
+      "nickname": "子浩.",
+      "avatar": "",
+      "start": "2026-09-01 12:47:36",
+      "end": "进行中",
+      "duration": "进行中"
+    },
     {
       "id": 80,
       "rid": "Zihaolaoshi.",
