@@ -1,11 +1,11 @@
 {
-  "updated_at": "2026-09-05 05:45:05",
+  "updated_at": "2026-09-05 09:27:33",
   "report": {
     "year": 2026,
     "month": 9,
     "done_hours": 7.92,
     "target_hours": 156,
-    "remain_hours": 148.09,
+    "remain_hours": 148.08,
     "is_current_month": true,
     "days_left": 26,
     "daily_need_hours": 5.7,
@@ -16,9 +16,9 @@
       "rid": "Zihaolaoshi.",
       "nickname": "子浩.",
       "avatar": "",
-      "is_living": false,
+      "is_living": true,
       "title": "“幻想不是止痛药”",
-      "user_count": "0"
+      "user_count": "11"
     },
     {
       "rid": "zihaolaoshi",
@@ -30,6 +30,15 @@
     }
   ],
   "sessions": [
+    {
+      "id": 83,
+      "rid": "Zihaolaoshi.",
+      "nickname": "子浩.",
+      "avatar": "",
+      "start": "2026-09-05 09:27:30",
+      "end": "进行中",
+      "duration": "进行中"
+    },
     {
       "id": 82,
       "rid": "Zihaolaoshi.",
