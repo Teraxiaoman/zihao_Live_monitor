@@ -1,32 +1,34 @@
 {
-  "updated_at": "2026-09-05 09:27:33",
+  "updated_at": "2026-09-05 12:58:37",
   "report": {
     "year": 2026,
     "month": 9,
-    "done_hours": 7.92,
+    "done_hours": 11.43,
     "target_hours": 156,
-    "remain_hours": 148.08,
+    "remain_hours": 144.57,
     "is_current_month": true,
     "days_left": 26,
-    "daily_need_hours": 5.7,
-    "progress_percent": 5.1
+    "daily_need_hours": 5.56,
+    "progress_percent": 7.3
   },
   "accounts": [
     {
       "rid": "Zihaolaoshi.",
       "nickname": "子浩.",
       "avatar": "",
-      "is_living": true,
-      "title": "“幻想不是止痛药”",
-      "user_count": "11"
+      "is_living": false,
+      "title": "",
+      "user_count": "",
+      "error": "返回的不是 JSON，抖音接口可能改版了"
     },
     {
       "rid": "zihaolaoshi",
       "nickname": "子浩（沉淀版）.",
       "avatar": "",
       "is_living": false,
-      "title": "别错过这场精彩直播啦",
-      "user_count": "0"
+      "title": "",
+      "user_count": "",
+      "error": "返回的不是 JSON，抖音接口可能改版了"
     }
   ],
   "sessions": [
